@@ -47,7 +47,7 @@ function ContextMenu({ item, isUploadingItem }) {
       <div
         className={itemClass}
         onClick={() =>
-          (window.location.href = `http://localhost:4000/file/${item.id}?action=download`)
+          (window.location.href = `https://api.vpttoolsindia.store/file/${item.id}?action=download`)
         }
       >
         Download
