@@ -27,7 +27,7 @@ function DirectoryView() {
   const navigate = useNavigate();
 
   const [directoryName, setDirectoryName] = useState(
-    "My StrorageApp Directory",
+    "My StrorageApp Directory view ",
   );
   const [directoriesList, setDirectoriesList] = useState([]);
   const [filesList, setFilesList] = useState([]);
@@ -55,7 +55,7 @@ function DirectoryView() {
   const loadDirectory = async () => {
     try {
       const data = await getDirectoryItems(dirId);
-      setDirectoryName(dirId ? data.name : "My StrorageApp Directory");
+      setDirectoryName(dirId ? data.name : "My StrorageApp Directory view");
       setDirectoriesList([...data.directories].reverse());
       setFilesList([...data.files].reverse());
     } catch (err) {
