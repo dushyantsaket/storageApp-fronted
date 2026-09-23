@@ -102,7 +102,7 @@ function DirectoryView() {
 
   function handleRowClick(type, id) {
     if (type === "directory") navigate(`/directory/${id}`);
-    else window.location.href = `https://api.vpttoolsindia.store/${id}`;
+    else window.location.href = `https://api.vpttoolsindia.store/file/${id}`;
   }
 
   async function handleFileSelect(e) {
