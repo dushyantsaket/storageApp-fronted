@@ -1,20 +1,68 @@
-name: My first flow
-on: workflow_dispatch
+name: Deployee StorageApp Fronted
+on: [push, workflow_dispatch]
+
 jobs:
-  my-first-job:
+  Deployee:
     runs-on: ubuntu-latest
+
+    env:
+      S3_BUCKET_NAME: dushyant-storageapp-fronted
+      GOOGLE_CLIENT_URL: 594555697613-18p3s2o6hl7mvc3gj0o2a2bg7b27tj9m.apps.googleusercontent.com
+      BACKEND_BASE_URL: https://api.vpttoolsindia.store
     steps:
-      - name: List all files
-        run: ls -a
+      - name: Checkout the  repoestry
+        run: git clone https://github.com/dushyantsaket/storageApp-fronted.git .
 
-      - name: Print Working Directory
-        run: pwd
+      - name: setup node js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "26"
 
-      - name: Create JS file
-        run: echo 'console.log("Hello World!")'; > app.js
+      - name: Install dependencies
+        run: npm ci
 
-      - name: List all files
-        run: ls -a
+      - name: Run test
+        run: npm test
 
-      - name: Run Node.js File
-        run: node app.js
+      - name: Build app
+        run: npm run build
+
+      - name: configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{secrets.AWS_ACCESS_KEY_ID}}
+          aws-secret-access-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+          aws-region: ${{secrets.AWS_REGION}}
+
+      - name: Upload to s3
+        run: aws s3 sync  dist/ s3://dushyant-storageapp-fronted --recursive
+
+      - name: Invalidate CloudFornt
+        run: |
+          aws cloudfront create-invalidation \
+           --distribution-id E1S1GNYWQO67QF \
+           --paths "/*"
+
+      - name: Deloyement complete
+        run: echo "Fronted Deployement Successfully..."
+
+# name: My first flow
+# on: workflow_dispatch
+# jobs:
+#   my-first-job:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: List all files
+#         run: ls -a
+
+#       - name: Print Working Directory
+#         run: pwd
+
+#       - name: Create JS file
+#         run: echo 'console.log("Hello World!")'; > app.js
+
+#       - name: List all files
+#         run: ls -a
+
+#       - name: Run Node.js File
+#         run: node app.js
