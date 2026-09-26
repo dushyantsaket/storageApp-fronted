@@ -35,7 +35,7 @@ jobs:
           aws-region: ${{secrets.AWS_REGION}}
 
       - name: Upload to s3
-        run: aws s3 sync  dist/ s3://dushyant-storageapp-fronted --recursive
+        run: aws s3 sync  dist/ s3://dushyant-storageapp-fronted --delete
 
       - name: Invalidate CloudFornt
         run: |
