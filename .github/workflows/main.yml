@@ -11,7 +11,8 @@ jobs:
       BACKEND_BASE_URL: https://api.vpttoolsindia.store
     steps:
       - name: Checkout the  repoestry
-        uses: actions/checkout@v4
+        run: git clone https://github.com/dushyantsaket/storageApp-fronted.git .
+
       - name: setup node js
         uses: actions/setup-node@v4
         with:
