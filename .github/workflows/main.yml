@@ -1,5 +1,5 @@
 name: Deployee StorageApp Fronted
-on: [ workflow_dispatch]
+on: [workflow_dispatch]
 
 jobs:
   Deployee:
